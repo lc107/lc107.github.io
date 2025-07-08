@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刘超 - 前端开发工程师 | 大数据可视化专家</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tech-blue': '#00d4ff',
+                        'tech-purple': '#8b5cf6',
+                        'tech-green': '#10b981',
+                        'tech-orange': '#f59e0b',
+                        'tech-pink': '#ec4899',
+                        'dark-bg': '#0f172a',
+                        'dark-card': '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark-bg text-white overflow-x-hidden">
+    <!-- 粒子背景 -->
+    <div id="particles-bg" class="fixed inset-0 z-0"></div>
+    
+    <!-- 导航栏 -->
+    <nav class="navbar bg-dark-card/80 backdrop-blur-sm fixed top-0 z-50 border-b border-tech-blue/20">
+        <div class="navbar-start">
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"></path>
+                    </svg>
+                </div>
+                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-dark-card rounded-box w-52">
+                    <li><a href="#about" class="text-tech-blue hover:text-white">关于我</a></li>
+                    <li><a href="#timeline" class="text-tech-blue hover:text-white">工作经历</a></li>
+                    <li><a href="#skills" class="text-tech-blue hover:text-white">技能专长</a></li>
+                    <li><a href="#charts" class="text-tech-blue hover:text-white">技术图表</a></li>
+                </ul>
+            </div>
+            <a class="btn btn-ghost text-xl font-bold text-tech-blue">刘超 | 前端开发</a>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal px-1">
+                <li><a href="#about" class="text-tech-blue hover:text-white transition-colors">关于我</a></li>
+                <li><a href="#timeline" class="text-tech-blue hover:text-white transition-colors">工作经历</a></li>
+                <li><a href="#skills" class="text-tech-blue hover:text-white transition-colors">技能专长</a></li>
+                <li><a href="#charts" class="text-tech-blue hover:text-white transition-colors">技术图表</a></li>
+            </ul>
+        </div>
+        <div class="navbar-end">
+            <button class="btn btn-outline btn-sm text-tech-blue border-tech-blue hover:bg-tech-blue hover:text-dark-bg">
+                联系我
+            </button>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="relative z-10 pt-20">
+        <!-- 个人信息区域 -->
+        <section id="about" class="hero min-h-screen bg-gradient-to-br from-dark-bg via-slate-900 to-dark-bg">
+            <div class="hero-content text-center">
+                <div class="max-w-4xl">
+                    <!-- 头像区域 -->
+                    <div class="avatar mb-8">
+                        <div class="w-32 h-32 rounded-full ring ring-tech-blue ring-offset-base-100 ring-offset-2 mx-auto bg-gradient-to-br from-tech-blue to-tech-purple flex items-center justify-center">
+                            <span class="text-4xl font-bold text-white">刘超</span>
+                        </div>
+                    </div>
+                    
+                    <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-tech-blue via-tech-purple to-tech-green bg-clip-text text-transparent">
+                        刘超
+                    </h1>
+                    <h2 class="text-2xl mb-6 text-tech-blue">前端开发工程师 · 大数据可视化专家</h2>
+                    
+                    <!-- 统计数据 -->
+                    <div class="stats stats-vertical lg:stats-horizontal shadow-2xl bg-dark-card/50 backdrop-blur-sm border border-tech-blue/20 mb-8">
+                        <div class="stat">
+                            <div class="stat-figure text-tech-blue">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="stat-title text-gray-400">工作经验</div>
+                            <div class="stat-value text-tech-blue" data-count="8">0</div>
+                            <div class="stat-desc text-gray-300">年</div>
+                        </div>
+                        
+                        <div class="stat">
+                            <div class="stat-figure text-tech-green">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"></path>
+                                </svg>
+                            </div>
+                            <div class="stat-title text-gray-400">技术栈</div>
+                            <div class="stat-value text-tech-green" data-count="15">0</div>
+                            <div class="stat-desc text-gray-300">项技术</div>
+                        </div>
+                        
+                        <div class="stat">
+                            <div class="stat-figure text-tech-purple">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                                </svg>
+                            </div>
+                            <div class="stat-title text-gray-400">项目经验</div>
+                            <div class="stat-value text-tech-purple" data-count="20">0</div>
+                            <div class="stat-desc text-gray-300">个项目</div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                        专注于前端开发8年，擅长大数据可视化、Web 3D开发和数字化产品研发。
+                        熟练掌握React、Vue等主流框架，精通Three.js、Babylon.js等3D技术，
+                        致力于创造优秀的用户体验和数据可视化解决方案。
+                    </p>
+                    
+                    <div class="mt-8">
+                        <button class="btn btn-lg bg-gradient-to-r from-tech-blue to-tech-purple border-0 text-white hover:scale-105 transition-transform mr-4">
+                            查看作品
+                        </button>
+                        <button class="btn btn-lg btn-outline text-tech-blue border-tech-blue hover:bg-tech-blue hover:text-dark-bg">
+                            下载简历
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 工作经历时间轴 -->
+        <section id="timeline" class="py-20 bg-gradient-to-b from-dark-bg to-slate-900">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-tech-blue to-tech-purple bg-clip-text text-transparent">
+                    工作经历
+                </h2>
+                
+                <div class="timeline-container relative max-w-4xl mx-auto">
+                    <!-- 时间轴线 -->
+                    <div class="timeline-line absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-tech-blue via-tech-purple to-tech-green h-full"></div>
+                    
+                    <!-- 时间轴项目 -->
+                    <div class="timeline-items space-y-12">
+                        <!-- 当前职位 -->
+                        <div class="timeline-item flex items-center relative" data-aos="fade-up">
+                            <div class="timeline-content w-5/12 pr-8 text-right">
+                                <div class="card bg-dark-card/80 backdrop-blur-sm border border-tech-blue/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-tech-blue">海南老城开发控股有限公司</h3>
+                                        <p class="text-tech-green font-semibold">前端开发工程师</p>
+                                        <p class="text-gray-400 text-sm">2020 - 至今</p>
+                                        <p class="text-gray-300 mt-2">
+                                            负责数字化产品的前端研发工作，专注于大数据可视化和三维开发领域，
+                                            参与多个智能化项目的前端架构设计和开发实施。
+                                        </p>
+                                        <div class="flex flex-wrap gap-2 mt-3">
+                                            <span class="badge badge-outline text-tech-blue border-tech-blue">React</span>
+                                            <span class="badge badge-outline text-tech-purple border-tech-purple">Three.js</span>
+                                            <span class="badge badge-outline text-tech-green border-tech-green">数据可视化</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-marker absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-tech-blue rounded-full border-4 border-dark-bg shadow-lg z-10"></div>
+                            
+                            <div class="w-5/12 pl-8"></div>
+                        </div>
+                        
+                        <!-- 历史职位1 -->
+                        <div class="timeline-item flex items-center relative" data-aos="fade-up" data-aos-delay="200">
+                            <div class="w-5/12 pr-8"></div>
+                            
+                            <div class="timeline-marker absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-tech-purple rounded-full border-4 border-dark-bg shadow-lg z-10"></div>
+                            
+                            <div class="timeline-content w-5/12 pl-8">
+                                <div class="card bg-dark-card/80 backdrop-blur-sm border border-tech-purple/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-tech-purple">北京远舢智能科技</h3>
+                                        <p class="text-tech-green font-semibold">前端开发工程师</p>
+                                        <p class="text-gray-400 text-sm">2018 - 2020</p>
+                                        <p class="text-gray-300 mt-2">
+                                            参与物联网平台和智能建筑集成系统的前端开发，
+                                            负责可视化大屏和数据展示界面的设计与实现。
+                                        </p>
+                                        <div class="flex flex-wrap gap-2 mt-3">
+                                            <span class="badge badge-outline text-tech-purple border-tech-purple">Vue</span>
+                                            <span class="badge badge-outline text-tech-blue border-tech-blue">WebGIS</span>
+                                            <span class="badge badge-outline text-tech-orange border-tech-orange">物联网</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 历史职位2 -->
+                        <div class="timeline-item flex items-center relative" data-aos="fade-up" data-aos-delay="400">
+                            <div class="timeline-content w-5/12 pr-8 text-right">
+                                <div class="card bg-dark-card/80 backdrop-blur-sm border border-tech-green/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-tech-green">太极计算机</h3>
+                                        <p class="text-tech-green font-semibold">前端开发工程师</p>
+                                        <p class="text-gray-400 text-sm">2016 - 2018</p>
+                                        <p class="text-gray-300 mt-2">
+                                            参与企业级应用系统的前端开发，积累了丰富的大型项目开发经验，
+                                            熟悉前端工程化和团队协作开发流程。
+                                        </p>
+                                        <div class="flex flex-wrap gap-2 mt-3">
+                                            <span class="badge badge-outline text-tech-green border-tech-green">JavaScript</span>
+                                            <span class="badge badge-outline text-tech-blue border-tech-blue">HTML5</span>
+                                            <span class="badge badge-outline text-tech-purple border-tech-purple">CSS3</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-marker absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-tech-green rounded-full border-4 border-dark-bg shadow-lg z-10"></div>
+                            
+                            <div class="w-5/12 pl-8"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 技能专长 -->
+        <section id="skills" class="py-20 bg-gradient-to-b from-slate-900 to-dark-bg">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-tech-green to-tech-blue bg-clip-text text-transparent">
+                    技能专长
+                </h2>
+                
+                <div class="max-w-6xl mx-auto">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        <!-- 前端技术 -->
+                        <div class="skill-category" data-aos="fade-right">
+                            <h3 class="text-2xl font-bold mb-6 text-tech-blue flex items-center">
+                                <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                                </svg>
+                                前端技术
+                            </h3>
+                            <div class="space-y-4">
+                                <div class="skill-item">
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-white font-medium">React</span>
+                                        <span class="text-tech-blue">95%</span>
+                                    </div>
+                                    <div class="progress-bar bg-gray-700 rounded-full h-3 overflow-hidden">
+                                        <div class="progress-fill bg-gradient-to-r from-tech-blue to-tech-purple h-full rounded-full" data-width="95"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="skill-item">
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-white font-medium">Vue</span>
+                                        <span class="text-tech-green">90%</span>
+                                    </div>
+                                    <div class="progress-bar bg-gray-700 rounded-full h-3 overflow-hidden">
+                                        <div class="progress-fill bg-gradient-to-r from-tech-green to-tech-blue h-full rounded-full" data-width="90"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="skill-item">
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-white font-medium">JavaScript (ES6+)</span>
+                                        <span class="text-tech-orange">98%</span>
+                                    </div>
+                                    <div class="progress-bar bg-gray-700 rounded-full h-3 overflow-hidden">
+                                        <div class="progress-fill bg-gradient-to-r from-tech-orange to-tech-pink h-full rounded-full" data-width="98"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="skill-item">
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-white font-medium">HTML5 / CSS3</span>
+                                        <span class="text-tech-purple">95%</span>
+                                    </div>
+                                    <div class="progress-bar bg-gray-700 rounded-full h-3 overflow-hidden">
+                                        <div class="progress-fill bg-gradient-to-r from-tech-purple to-tech-pink h-full rounded-full" data-width="95"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 专业技术 -->
+                        <div class="skill-category" data-aos="fade-left">
+                            <h3 class="text-2xl font-bold mb-6 text-tech-purple flex items-center">
+                                <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 102 0V3a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm2.5 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm2.45.707a1.5 1.5 0 00.707-1.414L8.5 10.086V8.5a.5.5 0 11-1 0v2a.5.5 0 00.146.354l1.207 1.207z" clip-rule="evenodd"></path>
+                                </svg>
+                                专业技术
+                            </h3>
+                            <div class="space-y-4">
+                                <div class="skill-item">
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-white font-medium">Three.js</span>
+                                        <span class="text-tech-blue">88%</span>
+                                    </div>
+                                    <div class="progress-bar bg-gray-700 rounded-full h-3 overflow-hidden">
+                                        <div class="progress-fill bg-gradient-to-r from-tech-blue to-tech-green h-full rounded-full" data-width="88"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="skill-item">
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-white font-medium">数据可视化</span>
+                                        <span class="text-tech-green">92%</span>
+                                    </div>
+                                    <div class="progress-bar bg-gray-700 rounded-full h-3 overflow-hidden">
+                                        <div class="progress-fill bg-gradient-to-r from-tech-green to-tech-purple h-full rounded-full" data-width="92"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="skill-item">
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-white font-medium">Babylon.js</span>
+                                        <span class="text-tech-purple">85%</span>
+                                    </div>
+                                    <div class="progress-bar bg-gray-700 rounded-full h-3 overflow-hidden">
+                                        <div class="progress-fill bg-gradient-to-r from-tech-purple to-tech-orange h-full rounded-full" data-width="85"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="skill-item">
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-white font-medium">WebGIS</span>
+                                        <span class="text-tech-orange">80%</span>
+                                    </div>
+                                    <div class="progress-bar bg-gray-700 rounded-full h-3 overflow-hidden">
+                                        <div class="progress-fill bg-gradient-to-r from-tech-orange to-tech-pink h-full rounded-full" data-width="80"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 技术图表 -->
+        <section id="charts" class="py-20 bg-gradient-to-b from-dark-bg to-slate-900">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-tech-purple to-tech-orange bg-clip-text text-transparent">
+                    技术能力分析
+                </h2>
+                
+                <div class="max-w-6xl mx-auto">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        <!-- 雷达图 -->
+                        <div class="chart-container" data-aos="zoom-in">
+                            <div class="card bg-dark-card/80 backdrop-blur-sm border border-tech-blue/20 shadow-xl">
+                                <div class="card-body">
+                                    <h3 class="card-title text-tech-blue mb-4 flex items-center">
+                                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                                        </svg>
+                                        技术能力雷达图
+                                    </h3>
+                                    <div class="chart-wrapper h-80">
+                                        <canvas id="radarChart" class="w-full h-full"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 环形图 -->
+                        <div class="chart-container" data-aos="zoom-in" data-aos-delay="200">
+                            <div class="card bg-dark-card/80 backdrop-blur-sm border border-tech-purple/20 shadow-xl">
+                                <div class="card-body">
+                                    <h3 class="card-title text-tech-purple mb-4 flex items-center">
+                                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                            <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                                        </svg>
+                                        技术栈分布
+                                    </h3>
+                                    <div class="chart-wrapper h-80">
+                                        <canvas id="doughnutChart" class="w-full h-full"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 项目经验统计 -->
+                    <div class="mt-12" data-aos="fade-up">
+                        <div class="card bg-dark-card/80 backdrop-blur-sm border border-tech-green/20 shadow-xl">
+                            <div class="card-body">
+                                <h3 class="card-title text-tech-green mb-6 flex items-center">
+                                    <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                                        <path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 102 0V3a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 6V9a1 1 0 112 0v2a1 1 0 11-2 0zm2-3a1 1 0 11-2 0 1 1 0 012 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    项目经验统计
+                                </h3>
+                                <div class="chart-wrapper h-64">
+                                    <canvas id="barChart" class="w-full h-full"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系方式 -->
+        <section class="py-20 bg-gradient-to-b from-slate-900 to-dark-bg">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-4xl font-bold mb-8 bg-gradient-to-r from-tech-blue to-tech-green bg-clip-text text-transparent">
+                    联系我
+                </h2>
+                <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                    如果您对我的技能和经验感兴趣，欢迎与我联系讨论合作机会
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button class="btn btn-lg bg-gradient-to-r from-tech-blue to-tech-purple border-0 text-white hover:scale-105 transition-transform">
+                        发送邮件
+                    </button>
+                    <button class="btn btn-lg btn-outline text-tech-green border-tech-green hover:bg-tech-green hover:text-dark-bg">
+                        查看GitHub
+                    </button>
+                    <button class="btn btn-lg btn-outline text-tech-orange border-tech-orange hover:bg-tech-orange hover:text-dark-bg">
+                        LinkedIn
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 返回顶部按钮 -->
+    <button id="backToTop" class="btn btn-circle bg-tech-blue border-0 text-white fixed bottom-8 right-8 z-50 opacity-0 transition-all duration-300 hover:scale-110">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+
+    <!-- AOS动画库 -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- 自定义脚本 -->
+    <script type="module" src="js/script.js"></script>
+</body>
+</html>
