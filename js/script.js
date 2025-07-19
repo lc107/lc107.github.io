@@ -871,12 +871,97 @@ class QRCodeController {
 class AIChatController {
     constructor() {
         this.messages = [];
+        // 根据环境自动选择API地址
+        this.apiBaseUrl = this.getApiBaseUrl();
+        this.isConnected = false;
         this.init();
+    }
+
+    getApiBaseUrl() {
+        // 根据当前域名自动选择API地址
+        const hostname = window.location.hostname;
+        const protocol = window.location.protocol;
+        
+        // 本地开发环境
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            return 'http://localhost:3001';
+        }
+        
+        // GitHub Pages环境
+        if (hostname.includes('github.io')) {
+            // 替换为您的阿里云服务器地址
+            return 'https://your-domain.com'; // 请替换为您的实际域名
+        }
+        
+        // 生产环境
+        if (hostname.includes('your-domain.com')) {
+            return `${protocol}//${hostname}`;
+        }
+        
+        // 默认本地开发
+        return 'http://localhost:3001';
     }
 
     init() {
         this.setupEventListeners();
         this.setupDraggable();
+        this.checkServiceHealth();
+    }
+
+    async checkServiceHealth() {
+        try {
+            console.log('🔍 检查AI服务连接...');
+            const response = await fetch(`${this.apiBaseUrl}/api/ai/health`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                // 添加超时设置
+                signal: AbortSignal.timeout(5000) // 5秒超时
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const data = await response.json();
+            this.isConnected = data.success && data.status === 'healthy';
+            
+            if (this.isConnected) {
+                console.log('✅ AI服务连接正常');
+                this.updateAssistantStatus(true);
+            } else {
+                console.log('❌ AI服务连接异常:', data.message);
+                this.updateAssistantStatus(false);
+            }
+        } catch (error) {
+            console.error('❌ AI服务连接失败:', error.message);
+            this.isConnected = false;
+            this.updateAssistantStatus(false);
+            
+            // 提供更详细的错误信息
+            if (error.name === 'AbortError') {
+                console.log('⏰ 连接超时，请检查服务是否启动');
+            } else if (error.message.includes('Failed to fetch')) {
+                console.log('🌐 网络连接失败，请检查：');
+                console.log('   1. Node.js服务是否在 http://localhost:3001 运行');
+                console.log('   2. 防火墙是否阻止了连接');
+                console.log('   3. 端口3001是否被其他程序占用');
+            }
+        }
+    }
+
+    updateAssistantStatus(isOnline) {
+        const assistant = document.getElementById('ai-assistant');
+        const statusDot = assistant.querySelector('.w-6.h-6');
+        
+        if (isOnline) {
+            statusDot.className = 'w-6 h-6 bg-tech-green rounded-full flex items-center justify-center';
+            assistant.title = 'AI助手在线 - 点击开始对话';
+        } else {
+            statusDot.className = 'w-6 h-6 bg-red-500 rounded-full flex items-center justify-center';
+            assistant.title = 'AI助手离线 - 请检查服务连接';
+        }
     }
 
     setupEventListeners() {
@@ -889,6 +974,11 @@ class AIChatController {
         assistant.addEventListener('click', () => {
             modal.showModal();
             chatInput.focus();
+            
+            // 如果服务未连接，显示提示
+            if (!this.isConnected) {
+                this.addMessage('抱歉，AI服务暂时不可用，请检查服务连接。', 'ai', 'error');
+            }
         });
 
         // 发送消息
@@ -955,39 +1045,92 @@ class AIChatController {
         });
     }
 
-    sendMessage() {
+    async sendMessage() {
         const input = document.getElementById('chat-input');
         const message = input.value.trim();
         
         if (!message) return;
         
+        // 添加用户消息
         this.addMessage(message, 'user');
         input.value = '';
+        
+        // 如果服务未连接，显示错误消息
+        if (!this.isConnected) {
+            this.addMessage('抱歉，AI服务暂时不可用，请检查服务连接。', 'ai', 'error');
+            return;
+        }
         
         // 显示打字机效果
         const typingIndicator = this.addTypingIndicator();
         
-        // 模拟AI回复
-        setTimeout(() => {
+        try {
+            console.log('📤 发送消息到AI服务:', message);
+            
+            // 调用Node.js服务
+            const response = await fetch(`${this.apiBaseUrl}/api/ai/chat`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt: message
+                }),
+                // 添加超时设置
+                signal: AbortSignal.timeout(30000) // 30秒超时
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            
+            // 移除打字机效果
             this.removeTypingIndicator();
-            this.addMessage('这是一个模拟的AI回复。您可以在这里集成真实的AI接口。', 'ai');
-        }, 1500);
+            
+            if (data.success) {
+                console.log('✅ AI回复成功:', data.data.text);
+                // 添加AI回复
+                this.addMessage(data.data.text, 'ai');
+            } else {
+                console.error('❌ AI服务返回错误:', data.message);
+                // 显示错误消息
+                this.addMessage(`抱歉，AI服务出现错误：${data.message || '未知错误'}`, 'ai', 'error');
+            }
+        } catch (error) {
+            console.error('❌ AI聊天请求失败:', error.message);
+            this.removeTypingIndicator();
+            
+            let errorMessage = '抱歉，网络连接出现问题，请稍后重试。';
+            
+            if (error.name === 'AbortError') {
+                errorMessage = '抱歉，请求超时，请稍后重试。';
+            } else if (error.message.includes('Failed to fetch')) {
+                errorMessage = '抱歉，无法连接到AI服务，请检查服务是否正常运行。';
+            }
+            
+            this.addMessage(errorMessage, 'ai', 'error');
+        }
     }
 
-    addMessage(text, sender) {
+    addMessage(text, sender, type = 'normal') {
         const messagesContainer = document.getElementById('chat-messages');
         const messageDiv = document.createElement('div');
         messageDiv.className = `chat-message ${sender}-message`;
         
         if (sender === 'ai') {
             // AI消息（左侧）
+            const bgClass = type === 'error' ? 'bg-red-600/50' : 'bg-gray-700/50';
+            const textColor = type === 'error' ? 'text-red-200' : 'text-white';
+            
             messageDiv.innerHTML = `
                 <div class="flex items-start gap-3">
                     <div class="w-8 h-8 rounded-full bg-gradient-to-br from-tech-blue to-tech-purple p-0.5 flex-shrink-0">
                         <img src="./images/头像.png" alt="AI助手" class="w-full h-full rounded-full object-cover">
                     </div>
                     <div class="flex-1">
-                        <div class="bg-gray-700/50 rounded-lg p-3 text-white">
+                        <div class="${bgClass} rounded-lg p-3 ${textColor}">
                             <p class="text-sm">${text}</p>
                         </div>
                     </div>
@@ -1046,6 +1189,67 @@ class AIChatController {
         const typingIndicator = document.querySelector('.typing-indicator-container');
         if (typingIndicator) {
             typingIndicator.remove();
+        }
+    }
+
+    // 流式发送消息（可选功能）
+    async sendMessageStream(message) {
+        if (!this.isConnected) {
+            this.addMessage('抱歉，AI服务暂时不可用，请检查服务连接。', 'ai', 'error');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${this.apiBaseUrl}/api/ai/chat/stream`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt: message
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('流式请求失败');
+            }
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let fullResponse = '';
+
+            // 添加AI消息容器
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message ai-message';
+            messageDiv.innerHTML = `
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-tech-blue to-tech-purple p-0.5 flex-shrink-0">
+                        <img src="./images/头像.png" alt="AI助手" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <div class="bg-gray-700/50 rounded-lg p-3 text-white">
+                            <p class="text-sm" id="streaming-text"></p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            messagesContainer.appendChild(messageDiv);
+            const textElement = messageDiv.querySelector('#streaming-text');
+
+            while (true) {
+                const { done, value } = await reader.read();
+                
+                if (done) break;
+                
+                const chunk = decoder.decode(value);
+                fullResponse += chunk;
+                textElement.textContent = fullResponse;
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        } catch (error) {
+            console.error('流式AI聊天失败:', error);
+            this.addMessage('抱歉，流式聊天出现错误，请稍后重试。', 'ai', 'error');
         }
     }
 }
