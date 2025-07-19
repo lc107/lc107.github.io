@@ -426,6 +426,8 @@ class NavigationController {
     constructor() {
         this.navbar = document.querySelector('.navbar');
         this.backToTopBtn = document.getElementById('backToTop');
+        this.navLinks = document.querySelectorAll('.nav-link');
+        this.sections = ['about', 'timeline', 'skills', 'charts'];
         this.init();
     }
 
@@ -433,6 +435,7 @@ class NavigationController {
         this.setupScrollEffects();
         this.setupSmoothScrolling();
         this.setupBackToTop();
+        this.setupNavigationHighlight();
     }
 
     setupScrollEffects() {
@@ -468,6 +471,19 @@ class NavigationController {
                 const target = document.querySelector(anchor.getAttribute('href'));
                 if (target) {
                     const offsetTop = target.offsetTop - 80;
+                    
+                    // 立即设置目标区域的导航为active状态
+                    const section = anchor.getAttribute('data-section');
+                    if (section) {
+                        // 移除所有导航链接的active类
+                        this.navLinks.forEach(navLink => navLink.classList.remove('active'));
+                        
+                        // 立即为当前点击的链接和所有相同data-section的链接添加active类
+                        const allSectionLinks = document.querySelectorAll(`[data-section="${section}"]`);
+                        allSectionLinks.forEach(navLink => navLink.classList.add('active'));
+                    }
+                    
+                    // 平滑滚动到目标位置
                     window.scrollTo({
                         top: offsetTop,
                         behavior: 'smooth'
@@ -484,6 +500,122 @@ class NavigationController {
                 behavior: 'smooth'
             });
         });
+    }
+
+    setupNavigationHighlight() {
+        // 添加一个标志来跟踪是否是通过点击触发的导航
+        this.isClickNavigation = false;
+        this.scrollTimeout = null;
+        
+        // 使用节流函数来优化滚动事件
+        const throttledScrollHandler = () => {
+            if (this.scrollTimeout) {
+                clearTimeout(this.scrollTimeout);
+            }
+            
+            this.scrollTimeout = setTimeout(() => {
+                // 如果是通过点击触发的导航，延迟更新滚动高亮
+                if (this.isClickNavigation) {
+                    setTimeout(() => {
+                        this.isClickNavigation = false;
+                        this.updateNavigationHighlight();
+                    }, 800); // 给足够时间让滚动完成
+                } else {
+                    this.updateNavigationHighlight();
+                }
+            }, 50); // 50ms的节流延迟
+        };
+        
+        // 监听滚动事件，更新导航高亮
+        window.addEventListener('scroll', throttledScrollHandler);
+
+        // 监听导航链接点击事件
+        this.navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                // 防止重复点击
+                if (link.classList.contains('active')) {
+                    return;
+                }
+                
+                // 设置点击导航标志
+                this.isClickNavigation = true;
+                
+                // 立即设置目标区域的导航为active状态
+                const section = link.getAttribute('data-section');
+                if (section) {
+                    // 移除所有导航链接的active类
+                    this.navLinks.forEach(navLink => navLink.classList.remove('active'));
+                    
+                    // 立即为当前点击的链接和所有相同data-section的链接添加active类
+                    const allSectionLinks = document.querySelectorAll(`[data-section="${section}"]`);
+                    allSectionLinks.forEach(navLink => navLink.classList.add('active'));
+                }
+                
+                console.log('Navigation clicked:', link.textContent); // 调试信息
+            });
+        });
+
+        // 初始化时设置默认高亮
+        this.updateNavigationHighlight();
+    }
+
+    updateNavigationHighlight() {
+        const scrollPosition = window.scrollY + 80; // 减少偏移量，让检测更精确
+
+        // 检查当前滚动位置对应的区域
+        let currentSection = '';
+        let maxOverlap = 0;
+        
+        this.sections.forEach(sectionId => {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                const sectionTop = section.offsetTop;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                const sectionHeight = section.offsetHeight;
+                
+                // 计算当前滚动位置与区域的交叉程度
+                const overlap = Math.min(scrollPosition + 100, sectionBottom) - Math.max(scrollPosition, sectionTop);
+                
+                if (overlap > 0 && overlap > maxOverlap) {
+                    maxOverlap = overlap;
+                    currentSection = sectionId;
+                }
+            }
+        });
+
+        // 如果找到了当前区域，设置对应的导航链接为active
+        if (currentSection) {
+            // 检查是否已经有正确的active状态
+            const currentActiveLinks = document.querySelectorAll('.nav-link.active');
+            const shouldBeActiveLinks = document.querySelectorAll(`[data-section="${currentSection}"]`);
+            
+            // 只有当active状态需要改变时才更新
+            let needsUpdate = false;
+            
+            if (currentActiveLinks.length !== shouldBeActiveLinks.length) {
+                needsUpdate = true;
+            } else {
+                // 检查当前active的链接是否是正确的
+                const currentActiveSections = Array.from(currentActiveLinks).map(link => link.getAttribute('data-section'));
+                if (!currentActiveSections.every(section => section === currentSection)) {
+                    needsUpdate = true;
+                }
+            }
+            
+            if (needsUpdate) {
+                // 移除所有导航链接的active类
+                this.navLinks.forEach(link => link.classList.remove('active'));
+                
+                // 设置新的active状态
+                shouldBeActiveLinks.forEach(link => {
+                    link.classList.add('active');
+                });
+                console.log(`Active section: ${currentSection}`); // 调试信息
+            }
+        } else {
+            // 如果没有找到当前区域，清除所有active状态
+            this.navLinks.forEach(link => link.classList.remove('active'));
+        }
     }
 }
 
@@ -589,4 +721,5 @@ class ResumeApp {
 const app = new ResumeApp();
 
 // 导出模块（如果需要）
-export { ResumeApp, AnimationController, ChartController, NavigationController, TimelineController };
+export { AnimationController, ChartController, NavigationController, ResumeApp, TimelineController };
+
