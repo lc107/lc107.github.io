@@ -52,6 +52,20 @@ body {
     backdrop-filter: blur(10px);
 }
 
+/* 半透明导航栏 */
+.navbar {
+    background: rgba(30, 41, 59, 0.8) !important;
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+/* 半透明下拉菜单 */
+.dropdown-content {
+    background: rgba(30, 41, 59, 0.9) !important;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
 /* 导航链接样式 */
 .nav-link {
     position: relative;
@@ -716,4 +730,320 @@ li a.nav-link.active:active {
 
 .social-icon:hover {
     transform: scale(1.1) rotate(5deg);
+}
+
+/* 二维码放大模态框样式 */
+.qr-modal-content {
+    transition: all 0.3s ease;
+}
+
+.qr-modal-content:hover {
+    transform: scale(1.05);
+}
+
+/* AI助手拖拽样式 */
+#ai-assistant {
+    user-select: none;
+    touch-action: none;
+}
+
+#ai-assistant.dragging {
+    opacity: 0.8;
+    transform: scale(1.1);
+}
+
+/* 聊天消息样式 */
+.chat-message {
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.3s ease-out;
+}
+
+.chat-message:last-child {
+    margin-bottom: 0;
+}
+
+/* AI消息样式（左侧） */
+.ai-message {
+    display: block;
+}
+
+.ai-message .bg-gray-700\/50 {
+    border-radius: 0.5rem 0.5rem 0.5rem 0.125rem;
+    position: relative;
+}
+
+.ai-message .bg-gray-700\/50::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 12px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid rgba(55, 65, 81, 0.5);
+}
+
+/* 用户消息样式（右侧） */
+.user-message {
+    display: block;
+}
+
+.user-message .bg-gradient-to-r {
+    border-radius: 0.5rem 0.5rem 0.125rem 0.5rem;
+    position: relative;
+}
+
+.user-message .bg-gradient-to-r::after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 12px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid var(--tech-blue);
+}
+
+/* 用户头像样式 */
+.user-avatar {
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    font-size: 0.875rem;
+}
+
+/* 消息动画 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 打字机效果 */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+}
+
+.typing-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #9ca3af;
+    animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typing {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 梦幻光影动画 */
+@keyframes dreamLight {
+    0%, 100% {
+        opacity: 0.3;
+        transform: translateX(-100px) rotate(0deg);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateX(100px) rotate(180deg);
+    }
+}
+
+@keyframes dreamCurve {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+    }
+}
+
+/* 聊天输入框动画 */
+#chat-input:focus {
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+    background: rgba(245, 158, 11, 0.05);
+    transition: all 0.3s ease;
+}
+
+#chat-input:focus::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #f59e0b, #f97316, #f59e0b);
+    border-radius: 0.5rem;
+    z-index: -1;
+    animation: borderGlow 2s ease-in-out infinite alternate;
+}
+
+/* 输入框容器相对定位 */
+#chat-input {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* 输入框聚焦时的光晕效果 */
+#chat-input:focus {
+    border-color: #f59e0b;
+    box-shadow: 
+        0 0 0 2px rgba(245, 158, 11, 0.2),
+        0 0 20px rgba(245, 158, 11, 0.3),
+        inset 0 0 10px rgba(245, 158, 11, 0.1);
+    background: rgba(245, 158, 11, 0.05);
+    transform: scale(1.02);
+    animation: yellowGlow 2s ease-in-out infinite;
+}
+
+/* 输入框悬停效果 */
+#chat-input:hover:not(:focus) {
+    border-color: rgba(245, 158, 11, 0.5);
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.1);
+}
+
+/* 发送按钮与输入框聚焦时的协调效果 */
+#chat-input:focus + #send-btn {
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+}
+
+/* 发送按钮动画 */
+#send-btn:hover {
+    transform: scale(1.05);
+}
+
+#send-btn:active {
+    transform: scale(0.95);
+}
+
+/* 黄色光效动画 */
+@keyframes yellowGlow {
+    0% {
+        box-shadow: 
+            0 0 0 2px rgba(245, 158, 11, 0.2),
+            0 0 10px rgba(245, 158, 11, 0.3),
+            inset 0 0 5px rgba(245, 158, 11, 0.1);
+    }
+    50% {
+        box-shadow: 
+            0 0 0 2px rgba(245, 158, 11, 0.4),
+            0 0 25px rgba(245, 158, 11, 0.5),
+            inset 0 0 15px rgba(245, 158, 11, 0.2);
+    }
+    100% {
+        box-shadow: 
+            0 0 0 2px rgba(245, 158, 11, 0.2),
+            0 0 10px rgba(245, 158, 11, 0.3),
+            inset 0 0 5px rgba(245, 158, 11, 0.1);
+    }
+}
+
+.shipinhao{
+    background: linear-gradient(to right, #f59e0b, #f97316)!important;
+}
+
+/* Three.js背景样式 */
+#threejs-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+#threejs-bg canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* 确保内容在Three.js背景之上 */
+main {
+    position: relative;
+    z-index: 10;
+}
+
+.navbar {
+    position: relative;
+    z-index: 50;
+}
+
+/* 半透明卡片背景 */
+.card {
+    background: rgba(30, 41, 59, 0.7) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.card:hover {
+    background: rgba(30, 41, 59, 0.8) !important;
+    border-color: rgba(0, 212, 255, 0.4);
+}
+
+/* 半透明统计卡片 */
+.stats {
+    background: rgba(30, 41, 59, 0.6) !important;
+    backdrop-filter: blur(10px);
+}
+
+/* 半透明技能进度条背景 */
+.progress-bar {
+    background: rgba(55, 65, 81, 0.7) !important;
+}
+
+/* 半透明时间轴卡片 */
+.timeline-content .card {
+    background: rgba(30, 41, 59, 0.7) !important;
+    backdrop-filter: blur(10px);
+}
+
+/* 半透明联系信息卡片 */
+.contact-item {
+    background: rgba(30, 41, 59, 0.5) !important;
+    backdrop-filter: blur(5px);
+}
+
+/* 半透明模态框背景 */
+.modal-box {
+    background: rgba(30, 41, 59, 0.9) !important;
+    backdrop-filter: blur(15px);
+}
+
+/* 半透明聊天消息背景 */
+.chat-message .bg-gray-700\/50 {
+    background: rgba(55, 65, 81, 0.6) !important;
+    backdrop-filter: blur(5px);
+}
+
+/* 半透明AI聊天对话框 */
+#chat-messages {
+    background: rgba(31, 41, 55, 0.6) !important;
+    backdrop-filter: blur(10px);
 }

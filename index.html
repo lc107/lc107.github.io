@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>刘超 - 前端开发工程师 | 大数据可视化专家 | Web 3D开发</title>
+    <link rel="shortcut icon" href="./卡通.ico">
     <link href="./plugins/daisyui@4.4.19/full.min.css" rel="stylesheet" type="text/css" />
     <script src="./plugins/tailwindCss/3.4.16.js"></script>
     <link rel="stylesheet" href="css/style.css">
@@ -28,6 +29,9 @@
 </head>
 
 <body class="bg-dark-bg text-white overflow-x-hidden">
+    <!-- Three.js几何体背景 -->
+    <div id="threejs-bg" class="fixed inset-0 z-0 pointer-events-none"></div>
+    
     <!-- 粒子背景 -->
     <div id="particles-bg" class="fixed inset-0 z-0"></div>
 
@@ -53,7 +57,7 @@
                             data-section="charts">技术图表</a></li>
                 </ul>
             </div>
-            <a class="btn btn-ghost text-xl font-bold text-tech-blue">刘超 | 前端开发</a>
+            <a class="btn btn-ghost text-xl font-bold text-tech-blue">刘超 | 软件开发</a>
         </div>
         <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1">
@@ -77,7 +81,7 @@
     <!-- 主要内容 -->
     <main class="relative z-10 pt-20">
         <!-- 个人信息区域 -->
-        <section id="about" class="hero min-h-screen bg-gradient-to-br from-dark-bg via-slate-900 to-dark-bg">
+        <section id="about" class="hero min-h-screen bg-gradient-to-br from-dark-bg/50 via-slate-900/50 to-dark-bg/50 backdrop-blur-sm">
             <div class="hero-content text-center">
                 <div class="max-w-4xl">
                     <!-- 头像区域 -->
@@ -96,7 +100,7 @@
 
                     <!-- 统计数据 -->
                     <div
-                        class="stats stats-vertical lg:stats-horizontal shadow-2xl bg-dark-card/50 backdrop-blur-sm border border-tech-blue/20 mb-8">
+                        class="stats stats-vertical lg:stats-horizontal shadow-2xl bg-dark-card/30 backdrop-blur-sm border border-tech-blue/20 mb-8">
                         <div class="stat">
                             <div class="stat-figure text-tech-blue">
                                 <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
@@ -125,7 +129,7 @@
                             <div class="stat-figure text-tech-purple">
                                 <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
                                     <path
-                                        d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z">
+                                        d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z">
                                     </path>
                                 </svg>
                             </div>
@@ -143,7 +147,7 @@
                     </p>
 
                     <!-- 教育背景 -->
-                    <div class="mt-6 p-4 bg-dark-card/30 backdrop-blur-sm border border-tech-blue/20 rounded-lg">
+                    <div class="mt-6 p-4 bg-dark-card/20 backdrop-blur-sm border border-tech-blue/20 rounded-lg">
                         <h3 class="text-lg font-semibold text-tech-blue mb-2 flex items-center">
                             <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path
@@ -164,7 +168,8 @@
                             查看作品
                         </button>
                         <button
-                            class="btn btn-lg btn-outline text-tech-blue border-tech-blue hover:bg-tech-blue hover:text-dark-bg">
+                            class="btn btn-lg btn-outline text-tech-blue border-tech-blue hover:bg-tech-blue hover:text-dark-bg"
+                            onclick="window.location.href='刘超简历.docx'">
                             下载简历
                         </button>
                     </div>
@@ -173,7 +178,7 @@
         </section>
 
         <!-- 工作经历时间轴 -->
-        <section id="timeline" class="py-20 bg-gradient-to-b from-dark-bg to-slate-900">
+        <section id="timeline" class="py-20 bg-gradient-to-b from-dark-bg/50 to-slate-900/50 backdrop-blur-sm">
             <div class="container mx-auto px-4">
                 <h2
                     class="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-tech-blue to-tech-purple bg-clip-text text-transparent">
@@ -192,7 +197,7 @@
                         <div class="timeline-item flex items-center relative" data-aos="fade-up">
                             <div class="timeline-content left-content w-5/12 pr-8 text-right">
                                 <div
-                                    class="card bg-dark-card/80 backdrop-blur-sm border border-tech-blue/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                                    class="card bg-dark-card/60 backdrop-blur-sm border border-tech-blue/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
                                     <div class="card-body">
                                         <h3 class="card-title text-tech-blue">海南老城开发控股有限公司</h3>
                                         <p class="text-tech-green font-semibold">前端开发工程师</p>
@@ -230,7 +235,7 @@
 
                             <div class="timeline-content right-content w-5/12 pl-8">
                                 <div
-                                    class="card bg-dark-card/80 backdrop-blur-sm border border-tech-purple/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                                    class="card bg-dark-card/60 backdrop-blur-sm border border-tech-purple/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
                                     <div class="card-body">
                                         <h3 class="card-title text-tech-purple">北京远舢智能科技有限公司</h3>
                                         <p class="text-tech-green font-semibold">数字孪生工程师</p>
@@ -256,7 +261,7 @@
                         <div class="timeline-item flex items-center relative" data-aos="fade-up" data-aos-delay="400">
                             <div class="timeline-content left-content w-5/12 pr-8 text-right">
                                 <div
-                                    class="card bg-dark-card/80 backdrop-blur-sm border border-tech-green/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                                    class="card bg-dark-card/60 backdrop-blur-sm border border-tech-green/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
                                     <div class="card-body">
                                         <h3 class="card-title text-tech-green">太极计算机股份有限公司</h3>
                                         <p class="text-tech-green font-semibold">软件工程师</p>
@@ -294,7 +299,7 @@
 
                             <div class="timeline-content right-content w-5/12 pl-8">
                                 <div
-                                    class="card bg-dark-card/80 backdrop-blur-sm border border-tech-orange/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                                    class="card bg-dark-card/60 backdrop-blur-sm border border-tech-orange/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
                                     <div class="card-body">
                                         <h3 class="card-title text-tech-orange">北京祝融视觉科技股份有限公司</h3>
                                         <p class="text-tech-green font-semibold">web前端</p>
@@ -320,7 +325,7 @@
                         <div class="timeline-item flex items-center relative" data-aos="fade-up" data-aos-delay="800">
                             <div class="timeline-content left-content w-5/12 pr-8 text-right">
                                 <div
-                                    class="card bg-dark-card/80 backdrop-blur-sm border border-tech-pink/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                                    class="card bg-dark-card/60 backdrop-blur-sm border border-tech-pink/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
                                     <div class="card-body">
                                         <h3 class="card-title text-tech-pink">西安协同时光软件有限公司</h3>
                                         <p class="text-tech-green font-semibold">web前端</p>
@@ -358,7 +363,7 @@
 
                             <div class="timeline-content right-content w-5/12 pl-8">
                                 <div
-                                    class="card bg-dark-card/80 backdrop-blur-sm border border-tech-blue/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                                    class="card bg-dark-card/60 backdrop-blur-sm border border-tech-blue/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
                                     <div class="card-body">
                                         <h3 class="card-title text-tech-blue">陕西筑巢科技有限公司</h3>
                                         <p class="text-tech-green font-semibold">web前端开发工程师</p>
@@ -385,7 +390,7 @@
         </section>
 
         <!-- 技能专长 -->
-        <section id="skills" class="py-20 bg-gradient-to-b from-slate-900 to-dark-bg">
+        <section id="skills" class="py-20 bg-gradient-to-b from-slate-900/50 to-dark-bg/50 backdrop-blur-sm">
             <div class="container mx-auto px-4">
                 <h2
                     class="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-tech-green to-tech-blue bg-clip-text text-transparent">
@@ -569,7 +574,7 @@
         </section>
 
         <!-- 技术图表 -->
-        <section id="charts" class="py-20 bg-gradient-to-b from-dark-bg to-slate-900">
+        <section id="charts" class="py-20 bg-gradient-to-b from-dark-bg/50 to-slate-900/50 backdrop-blur-sm">
             <div class="container mx-auto px-4">
                 <h2
                     class="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-tech-purple to-tech-orange bg-clip-text text-transparent">
@@ -580,7 +585,7 @@
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                         <!-- 雷达图 -->
                         <div class="chart-container" data-aos="zoom-in">
-                            <div class="card bg-dark-card/80 backdrop-blur-sm border border-tech-blue/20 shadow-xl">
+                            <div class="card bg-dark-card/60 backdrop-blur-sm border border-tech-blue/20 shadow-xl">
                                 <div class="card-body">
                                     <h3 class="card-title text-tech-blue mb-4 flex items-center">
                                         <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -599,7 +604,7 @@
 
                         <!-- 环形图 -->
                         <div class="chart-container" data-aos="zoom-in" data-aos-delay="200">
-                            <div class="card bg-dark-card/80 backdrop-blur-sm border border-tech-purple/20 shadow-xl">
+                            <div class="card bg-dark-card/60 backdrop-blur-sm border border-tech-purple/20 shadow-xl">
                                 <div class="card-body">
                                     <h3 class="card-title text-tech-purple mb-4 flex items-center">
                                         <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -618,7 +623,7 @@
 
                     <!-- 项目经验统计 -->
                     <div class="mt-12" data-aos="fade-up">
-                        <div class="card bg-dark-card/80 backdrop-blur-sm border border-tech-green/20 shadow-xl">
+                        <div class="card bg-dark-card/60 backdrop-blur-sm border border-tech-green/20 shadow-xl">
                             <div class="card-body">
                                 <h3 class="card-title text-tech-green mb-6 flex items-center">
                                     <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -640,7 +645,7 @@
         </section>
 
         <!-- 联系方式 -->
-        <section class="py-20 bg-gradient-to-b from-slate-900 to-dark-bg">
+        <section class="py-20 bg-gradient-to-b from-slate-900/50 to-dark-bg/50 backdrop-blur-sm">
             <div class="container mx-auto px-4 text-center">
                 <h2
                     class="text-4xl font-bold mb-8 bg-gradient-to-r from-tech-blue to-tech-green bg-clip-text text-transparent">
@@ -652,7 +657,7 @@
 
                 <!-- 联系信息 -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 max-w-4xl mx-auto">
-                    <div class="card bg-dark-card/50 backdrop-blur-sm border border-tech-blue/20">
+                    <div class="card bg-dark-card/30 backdrop-blur-sm border border-tech-blue/20">
                         <div class="card-body text-center">
                             <div class="text-tech-blue mb-2">
                                 <svg class="w-8 h-8 mx-auto" fill="currentColor" viewBox="0 0 20 20">
@@ -666,7 +671,7 @@
                         </div>
                     </div>
 
-                    <div class="card bg-dark-card/50 backdrop-blur-sm border border-tech-green/20">
+                    <div class="card bg-dark-card/30 backdrop-blur-sm border border-tech-green/20">
                         <div class="card-body text-center">
                             <div class="text-tech-green mb-2">
                                 <svg class="w-8 h-8 mx-auto" fill="currentColor" viewBox="0 0 20 20">
@@ -680,7 +685,7 @@
                         </div>
                     </div>
 
-                    <div class="card bg-dark-card/50 backdrop-blur-sm border border-tech-purple/20">
+                    <div class="card bg-dark-card/30 backdrop-blur-sm border border-tech-purple/20">
                         <div class="card-body text-center">
                             <div class="text-tech-purple mb-2">
                                 <svg class="w-8 h-8 mx-auto" fill="currentColor" viewBox="0 0 20 20">
@@ -694,7 +699,7 @@
                         </div>
                     </div>
 
-                    <div class="card bg-dark-card/50 backdrop-blur-sm border border-tech-orange/20">
+                    <div class="card bg-dark-card/30 backdrop-blur-sm border border-tech-orange/20">
                         <div class="card-body text-center">
                             <div class="text-tech-orange mb-2">
                                 <svg class="w-8 h-8 mx-auto" fill="currentColor" viewBox="0 0 20 20">
@@ -718,7 +723,7 @@
                         class="btn btn-lg btn-outline text-tech-green border-tech-green hover:bg-tech-green hover:text-dark-bg">
                         查看GitHub
                     </a>
-                    <button onclick="window.location.href='刘超简历.pdf'"
+                    <button onclick="window.location.href='刘超简历.docx'"
                         class="btn btn-lg btn-outline text-tech-orange border-tech-orange hover:bg-tech-orange hover:text-dark-bg">
                         下载简历
                     </button>
@@ -795,7 +800,7 @@
                                         d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                                 </svg>
                             </a>
-                            <a href="https://space.bilibili.com/your-id" target="_blank"
+                            <a href="https://space.bilibili.com/3546375497189746?spm_id_from=333.1007.0.0" target="_blank"
                                 class="w-10 h-10 rounded-full bg-gray-800 hover:bg-tech-pink/20 flex items-center justify-center transition-all duration-300 hover:scale-110 social-icon">
                                 <svg class="w-5 h-5 text-gray-400 hover:text-tech-pink" fill="currentColor"
                                     viewBox="0 0 24 24">
@@ -803,7 +808,7 @@
                                         d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .658.124.907.373L9.653 4.44c.071.071.134.147.187.227h4.267a.836.836 0 0 1 .16-.227l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .658.124.907.373.267.249.391.551.391.907 0 .356-.124.658-.373.907zM5.333 6.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.764-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 8.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.373-.933.373s-.684-.124-.933-.373c-.25-.249-.383-.569-.4-.96V9.44c.017-.391.15-.711.4-.96.249-.25.56-.373.933-.373z" />
                                 </svg>
                             </a>
-                            <a href="https://www.douyin.com/user/your-id" target="_blank"
+                            <a href="https://www.douyin.com/" target="_blank"
                                 class="w-10 h-10 rounded-full bg-gray-800 hover:bg-tech-orange/20 flex items-center justify-center transition-all duration-300 hover:scale-110 social-icon">
                                 <svg class="w-5 h-5 text-gray-400 hover:text-tech-orange" fill="currentColor"
                                     viewBox="0 0 24 24">
@@ -811,24 +816,37 @@
                                         d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
                                 </svg>
                             </a>
+                            <!-- 小红书 -->
+                            <a href="https://www.xiaohongshu.com/user/profile/6342bda90000000018020ece?xsec_token=YBRptCwdIR70Bq4DsIfxtnnbtw8gPnkJ2h9Uxg1F2-LME%3D&xsec_source=app_share&xhsshare=WeixinSession&appuid=6342bda90000000018020ece&apptime=1752922203&share_id=4aeb6412fd5540cbb0db0eb558cd45e7&share_channel=wechat" target="_blank"
+                                class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center transition-all duration-300 hover:scale-110 social-icon">
+                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM0AAABgCAYAAAC+PvZZAAAACXBIWXMAACE4AAAhOAFFljFgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAA0KSURBVHgB7Z1LbFTXGce/cz1UlRKc6SqRghRLmAq6Cd0EKa2UwZC2uwRYFhV7SwWEVApSUxW7UqTSRXlYTdVsakdtd7y6ahMeU6lZkE1gA6iA4kog0Z1rg1SBZ07P/94Zezy+j+8+z70z3w+ZGY+vZ65n7v98z3OOohKjtzfGqOU0SFOdFL1OWplbvdP7IY2RUF0ULZjPc9Hc63zpW+b7m+Q4C+re5zepxCgqEXp8b4OobUSh3jHfQRx1EoYU1TRfEM9ldf9Kk0qEddF4QiEjkvYkiUgEfxZdESl9Wd27NkeWsSIaPfZunWpLx8zd90iEIsRjkZS6RCObZtTdvy2QBQoVjWdV9Enz1SBBSI1rfeaLtj6FiEbEIuQKkgpEM0WJJ1fRuG7YpuXTpPUkCULuGMtT2zSVt9uWm2j0tj3HjFimSWIWoXimaWX0rFq4tEg5kLlo9PYfjdHK8z+KKyZYxXXZRvblUfNxKENc67Ly7CsRjGAdFL916ys9PnGSMiYzS2NO7jR5KWRBKBnZxjqpRdNxxy52KviCUE7gro18Y3cWwkklGlcwrWfXpQ9MqAimMDqyO22ckzimEcEIFaTuxjnf3nOIUpDI0ohghMrjqEn1r6vzlIDYohHBCAODVvvUg6uXKCaxRCOCEQaMRDEOO6ZxW2JEMMJgUSdqXXSNQQz4iYDa0kkRjDBw4Jo2JRPXKDBhiaZTVZXCpTCgmBpj7Qm7cyAypvGKl8++JkEYfI6r+9fORB0UbWkQxwjCcHCSE9+EisZ1yySOEYaHutehH06ge1Ypt2z0RaIdW6OPu3GLCuXDnxLt/V74MXfuEx3+JZWWyQNEhw6EH/PoMdHB92lgiKjf1AJ/ceXZaaoKEMyffht93LY9VBhbXjEX3P7o42YTFaWLY/ML5m95OfwYpWmgcPRpk01rBk1i83XP9LaJSXPzLgnJ2ffD6GMemhH6wt9JKBkISWpLgdniIEuT+cSdoePAD6KPmf00/OdvG9du84uUKXceeC5hP/uNyF/1sSi7GDM+cI77AwYJuG54zaUnxGa083ywco/+Q/TlLW+AKZZjxtqc8bM2G0TjWhkJ/tPhXoCvRB8XFWP9/LDn5mXJuflg0ex6nRKBi/zUB+HHfP4F0ZUvoi0rYqgPD69/DII7ZwaY+fNUIPWOtZnu/8FG90yrVG3TguHoT6KPwcXzqPDR0x6wmhBW88/BA4GfYABE+YvDyUWdnGN+nQLrRNNZn6xBQnK4VubcpzSU4L25/Af/bGdU4uRI4eM5rM1k/4PrLY3SYmXSsp+RABg2K9MPLAeynb0WB1YkarDBMaMZx3iRYDH+9ayKRo816rKoX0rwoXJcCMmYeRf/rz+g8qMbnUX6V1mzNJuc6qaYCx99AuBYmRs3iy+ylhXuINMFGbQ4Wbis0HqdNtZEU+UEwOYSiAauBss1+4yEHqK6DXqZtRQH9oUtrmhc10wSAOk4wsiYSTFzI1xLg84Je+9dvddF8+o0IyMNlEGtEtWqAZae5mOe074218oAZI2Wn/BeJyhZwKnd4Dn8znf5qf/xbu3G5xpAcB71ekGvxTlPuNY4Dud1w2fWMd4DWGfrLm27Yf5r4l6nuFkCK3P5k+jY5MSpfNwbTmMlRrkTv/H/GcfKAFwcf/0k/JjGj9cuwIM/8z/m3lWKBIXEoPP146OP/R/H33b0ULLXghXh9ASC2/eD/95SoN7q3vNiGrX2gDU4wfzSU8oFjvUKipsghCjBccFIO0ipaK51KENMGonJonUKnU4nnrG7pCw3+7WcU+aE09c0+oL/429kWDuYu0BDSdB7WzZqT1ydOFSr2V+DmTvS5GVpOGIM8s+PMl2zKCBcuDlCiWl3RNO5YxVOIA7ycl2SivE747yWGQ6zQ9pWUyUUuak+p1IdzXkVtjiWxk8c2xmzRTlIKroaaP0t3DgmCfAa2eZVZgo1LzBng0N/7HL3AWVC1a3Mq0xPoeoo5VoapJzt74nJCQSXcxTNf5nPDdH0ihdpUhTd0nTf4vls1SDw90S995xaC2LSLSmEA9Hh9x8yBy9bdLyyGik9ZruuyUoEPCxBKtbvPNHif/6zzizLvgsQ80OiMmsI/m2lmT/+VTZzVBDbXf8LJebUibX7eC9uP/Dc1RImRpB2rhnBlMDSWM7Tcy9ajIh+sx7x+3N9swpxMR5lWKBhnVcTBFx1fGEQwvuK96dM8d43F+soblZDNI9yNt1pajV+yLya9EA8mO15pFy9xJnu7pwY24kALtx6ErcXbViLmXFBLSxON3SetKheDtFwyFs0HEvGdSM5vWhomfFz9QR/IJwyzJvStZKIhpOyzNuN4Tw/50ODlWHN3pR5NbHAe3+Isfhi3tRWFiCaRbKNzWbNOHDO8w3GXHcpZiZjl/3mFWCKmxURzXLO7hknEcCJaTi9aHOFrt81OBS/hNNG/ldfNClntWh1Atqo5WbNOES5kdzlm6YOeLWNfiCmOxl1GQwqcH8t1uyw4qYpbrZvGeHYs3vcFSRzj2kYiYCXIgQ+yfS5Iaz9fX/3w8fF12ywW0FUGn3v9/0X8OsFSZqkOx90YxWu64WBy5ZoFC3gpkZtY2lib4yeIZuZtY+8s2fLKSaiAbgOO8YpMVivuOiaTdA05f5jolhO2QqEJWuxgmZZ0spBaLWAG8f8i7UddOZw3LPbBaRmbzPcIrdXK+B8uWsEBDHsnQFVyCZqckcGkz0bsSsazlThRwU08nFH+aDNo3akmCYgnQH8plmbKL2AG4eeP18gm3AyIkUVATmvE2RR0sxzl/6ziuC4BsZRC02TPVP2rA0ncfdlQa3zafzy+YQtMYO2mMYAo+5faeLW6wjQ+h9kC86eI0XNN+GIM8gqIF2MZYziWkWZ5lwRVLN7r7b2gD5GNkAAiC7WoAD7RoFGEOJEtijsXMKsAmITqfQPKGuGxbM0rVaTbLXT4CINq5AXmVXBuYQVF6VfbIhxmqv38J/1uAbxQFA9oOipwEGWIqxfrCy7Fgj5YIqa3XgG9Oy5qS+b/xpkAwgGF+RkX3HLRioWU2z9XLSg2APZNEyUgrgRz8QpwsKq9U/pRYF075uUGjxP1BQFv9e3xUulHniavd+siWalPUc1B7s625nJiQlZ/aLhNjZm2cjXdRd7pyqHWZlu60zcvVbAwfc3Pvb7mWzWUkPdKKp2hE1rixANZwGPIxktupgH2pnv/XZVNHDR9NaJeWOK7CQEYFEwWncvPFyk/fEFRvX+qa/4MLJ2j+YvrF8U42KAYNK0zjx8vNH15DZ8VpE0C2/YBK7ZvTXXDPTtuelcIpvM9gjaL7WLUXHLy+u/uIKJ04rTn5w4H5AASDN33c/dS9uKU1ayXKaq+C7wmf4H1onGC3bW8tGFgzcWXxCPXyzTjX2SEHdhP1ibrlvmdy7cGZp++Ll7Sdy7KjE7T6lByr/ItSJcK3Ntrv/hms+RM1b3q0GBMKoWkmREjruIBT6csP1S0vjgw2RlunQHxDQDQ9Epf02+St+wRoB1axOVLeu++XFw46ME/Ws4lyArk/Qi97MyaZ6vSlz5JyUG7nKRhWPMnamZ5JgPAQtrqBkqM3FMfR6Tu9JYGb+kQpkzR1kCS5HEvYJYgnZqywtjZdTd5oLfj3xFY93aRAFLw5m9Bx8YLlaWtZ60VqE/qTAsVgZEdX/4Hf/R7+Jtg5gFbjHz2nTQj2uBv1hrTdGK8zWVFcQFfiM0ZhHCFctrc1OIFR/i22/Gnw7gNzsT84luWGrG4MxTcmdlRpxfnEEJCZawuAavh4XQkSlFpszOIpGhnlboRGc9PjFtbk6SIAwLiuZMxmwq7JDwxQJX2me6iwkIwsCDa32kHRnPh4rGa+Rs7yNBGA5mgoL/XiKXpVX3mnBoj5MgDDJanfUrZPrBWsvZZBKMm6YyKOkKQgmBW9ZqTXMP5y+A/rz1ntU5N4KQB14cs9sLRXiwReM+aa21TxIDwgDhxuycOKaXWFttuE9uVCnCEQYCraY6MXssYu9PI8IRBgJFU+rB1URTYRKv4qy3N8ao5VzvbhMtCJUBgmFmyvx/PQUiHKFiLJIyQX8Cl6yXVNsHrrpqklUTyo7X6v/dtILxnioj9NaJM9bWFxCEUFQTDchxs2SBz0YZoscnTC2H7K1oIwgbmQlr809C5ts5SZwjlAK4Y9qZ6l3kL7unzgnX6sBdE/EIRaPVWbTFxKnyxyHXjQM9q6OmzR+RYq0jQeBiYhfVOp5FsB/6KlQAIh4hXzA1X83k4Yr5vhoViIhHyJZixbL6qmSBVfGQektiHiEmi+56ZMq5VLRYutjcDN1Fj+9tGD90UgQkhICAvmk8lHnspZRXgM/Fumh6cQVE7Z3mtN4x35lbqfcMKd5+SVrfctcXX1m5aVsovZRKNP3obY2d1B4ZI2UEpOg1M9KMEYSkdF2sUsXpdslrteBuNa7p395j7Zt5Z7/S8n8dgsfPv/PfFwAAAABJRU5ErkJggg==" />
+                                
+                            </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- 二维码区域 -->
                 <div class="flex flex-col items-center justify-center">
-                    <div class="w-32 h-32 bg-white p-2 rounded-lg mb-2 shadow-lg">
-                        <!-- 这里用渐变色背景替代抖音二维码 -->
+                    <div class="w-32 h-32 bg-white p-2 rounded-lg mb-2 shadow-lg qr-code cursor-pointer hover:scale-105 transition-transform" 
+                         data-title="抖音二维码">
+                        <!-- 抖音二维码 -->
                         <div
                             class="w-full h-full bg-gradient-to-br from-tech-pink via-tech-purple to-tech-blue rounded flex items-center justify-center">
-                            <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                            </svg>
+                            <img src="./images/抖音(1).png" class="w-16 h-16 object-contain"/>
                         </div>
                     </div>
-                    <p class="text-tech-pink font-medium">抖音二维码</p>
-                    <p class="text-xs text-gray-400">扫码关注我的抖音号</p>
+                    <p class="text-sm text-gray-300 mb-4">抖音</p>
+                    
+                    <div class="w-32 h-32 bg-white p-2 rounded-lg mb-2 shadow-lg qr-code cursor-pointer hover:scale-105 transition-transform"
+                         data-title="小红书二维码">
+                        <!-- 视频号二维码 -->
+                        <div
+                            class="shipinhao w-full h-full bg-gradient-to-br from-tech-red via-tech-pink to-tech-purple rounded flex items-center justify-center shipinhao">
+                            <img src="./images/视频号(1).jpg" class="w-16 h-16 object-contain"/>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300">视频号</p>
                 </div>
             </div>
 
@@ -841,14 +859,116 @@
     </dialog>
 
     <!-- AOS动画库 -->
-    <link href="./plugins/aosJs/aos.css" rel="stylesheet">
-    <script src="./plugins/aosJs/aos.js"></script>
+    <link href="./plugins/aosJs/aosjs.css" rel="stylesheet">
+    <script src="./plugins/aosJs/aosjs.js"></script>
+
+    <!-- Three.js库 -->
+    <script src="./plugins/threejs/three.min.js"></script>
 
     <!-- Chart.js -->
     <script src="./plugins/chartJs/chart.js"></script>
 
+    <!-- 添加直接的JavaScript代码处理模态框 -->
+    <script>
+        // 在页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取模态框元素
+            const contactModal = document.getElementById('contact-modal');
+            if (!contactModal) {
+                console.error('联系我模态框元素未找到');
+                return;
+            }
+
+            // 为所有打开模态框的按钮添加事件监听器
+            const contactButtons = document.querySelectorAll('[onclick*="contact-modal"]');
+            contactButtons.forEach(button => {
+                // 移除内联onclick属性
+                const onclickAttr = button.getAttribute('onclick');
+                if (onclickAttr) {
+                    button.removeAttribute('onclick');
+                }
+                
+                // 添加点击事件监听器
+                button.addEventListener('click', function() {
+                    console.log('联系按钮被点击');
+                    contactModal.showModal();
+                });
+            });
+
+            // 点击模态框背景关闭
+            contactModal.addEventListener('click', function(event) {
+                if (event.target === contactModal) {
+                    contactModal.close();
+                }
+            });
+
+            console.log('模态框事件监听器设置完成');
+        });
+    </script>
+
     <!-- 自定义脚本 -->
     <script type="module" src="js/script.js"></script>
+
+    <!-- 二维码放大模态框 -->
+    <dialog id="qr-modal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box bg-dark-card/95 backdrop-blur-lg border border-tech-blue/30 max-w-md">
+            <h3 class="font-bold text-xl mb-4 bg-gradient-to-r from-tech-blue to-tech-purple bg-clip-text text-transparent">
+                扫描二维码
+            </h3>
+            <div id="qr-content" class="flex justify-center">
+                <!-- 二维码内容将在这里动态插入 -->
+            </div>
+            <div class="modal-action">
+                <button id="close-qr-btn" class="btn btn-sm btn-outline text-tech-blue border-tech-blue">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- AI聊天对话框 -->
+    <dialog id="ai-chat-modal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box bg-dark-card/95 backdrop-blur-lg border border-tech-blue/30 max-w-4xl h-110">
+            <h3 class="font-bold text-xl mb-4 bg-gradient-to-r from-tech-blue to-tech-purple bg-clip-text text-transparent">
+                AI助手
+            </h3>
+            <div id="chat-messages" class="h-80 overflow-y-auto mb-4 p-4 bg-gray-800/50 rounded-lg">
+                <div class="chat-message ai-message">
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-tech-blue to-tech-purple p-0.5 flex-shrink-0">
+                            <img src="./images/头像.png" alt="AI助手" class="w-full h-full rounded-full object-cover">
+                        </div>
+                        <div class="flex-1">
+                            <div class="bg-gray-700/50 rounded-lg p-3 text-white">
+                                <p class="text-sm">欢迎！我是您的AI助手，有什么可以帮助您的吗？</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-4">
+                <input type="text" id="chat-input" 
+                    class="flex-1 input input-bordered bg-gray-800/50 border-gray-600 text-white placeholder-gray-400 focus:outline-none" 
+                    placeholder="输入您的问题...">
+                <button id="send-btn" class="btn btn-primary bg-tech-blue border-0 hover:bg-tech-blue/90 transition-all duration-300">
+                    发送
+                </button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- 可拖拽的AI助手 -->
+    <div id="ai-assistant" class="fixed bottom-4 left-4 z-50 cursor-pointer transition-transform hover:scale-110">
+        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-tech-blue to-tech-purple p-1 shadow-lg">
+            <img src="./images/头像.png" alt="AI助手" class="w-full h-full rounded-full object-cover">
+        </div>
+        <div class="absolute -top-2 -right-2 w-6 h-6 bg-tech-green rounded-full flex items-center justify-center">
+            <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+        </div>
+    </div>
+
+    <!-- 梦幻光影背景Canvas -->
+    <canvas id="dream-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 </body>
 
 </html>

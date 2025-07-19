@@ -325,7 +325,7 @@ class ChartController {
         if (!ctx) return;
 
         const projectData = {
-            labels: ['React项目', 'Vue项目', '3D可视化', '数据大屏', 'WebGIS', '移动端'],
+            labels: ['Vue项目', 'React项目', '3D可视化', '数据大屏', 'WebGIS', '移动端'],
             values: [12, 8, 6, 10, 4, 5]
         };
 
@@ -667,6 +667,560 @@ class TimelineController {
     }
 }
 
+// 模态框控制器
+class ModalController {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        // 确保模态框在页面加载完成后正确初始化
+        const contactModal = document.getElementById('contact-modal');
+        if (contactModal) {
+            // 防止初始闪烁
+            contactModal.addEventListener('click', (e) => {
+                if (e.target === contactModal) {
+                    contactModal.close();
+                }
+            });
+        }
+
+        // 初始化模态框打开按钮 - 使用ID选择器
+        const contactBtn = document.getElementById('contact-btn');
+        const navContactBtn = document.getElementById('nav-contact-btn');
+        
+        if (contactBtn) {
+            contactBtn.addEventListener('click', () => {
+                if (contactModal) {
+                    contactModal.showModal();
+                }
+            });
+        }
+        
+        if (navContactBtn) {
+            navContactBtn.addEventListener('click', () => {
+                if (contactModal) {
+                    contactModal.showModal();
+                }
+            });
+        }
+    }
+}
+
+// 梦幻光影背景控制器
+class DreamBackgroundController {
+    constructor() {
+        this.canvas = document.getElementById('dream-canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.lights = [];
+        this.curves = [];
+        this.init();
+    }
+
+    init() {
+        this.resizeCanvas();
+        window.addEventListener('resize', () => this.resizeCanvas());
+        this.createLights();
+        this.createCurves();
+        this.animate();
+    }
+
+    resizeCanvas() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
+
+    createLights() {
+        for (let i = 0; i < 5; i++) {
+            this.lights.push({
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                radius: Math.random() * 50 + 20,
+                color: `hsl(${Math.random() * 60 + 180}, 70%, 60%)`,
+                speed: Math.random() * 2 + 1,
+                angle: Math.random() * Math.PI * 2
+            });
+        }
+    }
+
+    createCurves() {
+        for (let i = 0; i < 3; i++) {
+            this.curves.push({
+                points: this.generateCurvePoints(),
+                color: `hsla(${Math.random() * 60 + 180}, 70%, 60%, 0.3)`,
+                speed: Math.random() * 0.5 + 0.2
+            });
+        }
+    }
+
+    generateCurvePoints() {
+        const points = [];
+        for (let i = 0; i < 100; i++) {
+            points.push({
+                x: (i / 100) * window.innerWidth,
+                y: Math.sin(i * 0.1) * 100 + window.innerHeight / 2
+            });
+        }
+        return points;
+    }
+
+    animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        // 绘制光影
+        this.drawLights();
+        this.drawCurves();
+        
+        requestAnimationFrame(() => this.animate());
+    }
+
+    drawLights() {
+        this.lights.forEach(light => {
+            light.angle += light.speed * 0.02;
+            light.x += Math.cos(light.angle) * light.speed;
+            light.y += Math.sin(light.angle) * light.speed;
+
+            if (light.x < -100) light.x = window.innerWidth + 100;
+            if (light.x > window.innerWidth + 100) light.x = -100;
+            if (light.y < -100) light.y = window.innerHeight + 100;
+            if (light.y > window.innerHeight + 100) light.y = -100;
+
+            const gradient = this.ctx.createRadialGradient(light.x, light.y, 0, light.x, light.y, light.radius);
+            gradient.addColorStop(0, light.color);
+            gradient.addColorStop(1, 'transparent');
+
+            this.ctx.fillStyle = gradient;
+            this.ctx.beginPath();
+            this.ctx.arc(light.x, light.y, light.radius, 0, Math.PI * 2);
+            this.ctx.fill();
+        });
+    }
+
+    drawCurves() {
+        this.curves.forEach(curve => {
+            this.ctx.strokeStyle = curve.color;
+            this.ctx.lineWidth = 2;
+            this.ctx.beginPath();
+            
+            curve.points.forEach((point, index) => {
+                const y = point.y + Math.sin(Date.now() * 0.001 + index * 0.1) * 20;
+                if (index === 0) {
+                    this.ctx.moveTo(point.x, y);
+                } else {
+                    this.ctx.lineTo(point.x, y);
+                }
+            });
+            
+            this.ctx.stroke();
+        });
+    }
+}
+
+// 二维码控制器
+class QRCodeController {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        this.setupQRCodeListeners();
+    }
+
+    setupQRCodeListeners() {
+        // 为抖音和小红书二维码添加点击事件
+        const qrCodes = document.querySelectorAll('.qr-code');
+        qrCodes.forEach(qr => {
+            qr.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.showQRModal(qr.querySelector('img').src, qr.dataset.title);
+            });
+        });
+    }
+
+    showQRModal(imageSrc, title) {
+        const modal = document.getElementById('qr-modal');
+        const content = document.getElementById('qr-content');
+        
+        content.innerHTML = `
+            <div class="qr-modal-content">
+                <img src="${imageSrc}" alt="${title}" class="w-64 h-64 object-contain rounded-lg shadow-lg">
+                <p class="text-center mt-2 text-gray-300">${title}</p>
+            </div>
+        `;
+        
+        modal.showModal();
+        
+        // 添加点击外部关闭功能
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.close();
+            }
+        });
+
+        // 添加关闭按钮事件监听器
+        const closeBtn = document.getElementById('close-qr-btn');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                modal.close();
+            });
+        }
+    }
+}
+
+// AI聊天控制器
+class AIChatController {
+    constructor() {
+        this.messages = [];
+        this.init();
+    }
+
+    init() {
+        this.setupEventListeners();
+        this.setupDraggable();
+    }
+
+    setupEventListeners() {
+        const assistant = document.getElementById('ai-assistant');
+        const modal = document.getElementById('ai-chat-modal');
+        const sendBtn = document.getElementById('send-btn');
+        const chatInput = document.getElementById('chat-input');
+
+        // 点击助手打开聊天框
+        assistant.addEventListener('click', () => {
+            modal.showModal();
+            chatInput.focus();
+        });
+
+        // 发送消息
+        sendBtn.addEventListener('click', () => this.sendMessage());
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                this.sendMessage();
+            }
+        });
+
+        // 点击模态框外部关闭
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.close();
+            }
+        });
+
+        // 添加关闭按钮事件（如果有的话）
+        const closeButtons = modal.querySelectorAll('[onclick*="close"], .btn-close');
+        closeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                modal.close();
+            });
+        });
+    }
+
+    setupDraggable() {
+        const assistant = document.getElementById('ai-assistant');
+        let isDragging = false;
+        let startX, startY, startLeft, startTop;
+
+        assistant.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            assistant.classList.add('dragging');
+            startX = e.clientX;
+            startY = e.clientY;
+            startLeft = parseInt(assistant.style.left) || 16;
+            startTop = parseInt(assistant.style.top) || window.innerHeight - 80;
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            const deltaX = e.clientX - startX;
+            const deltaY = e.clientY - startY;
+            
+            let newLeft = startLeft + deltaX;
+            let newTop = startTop + deltaY;
+            
+            // 边界检查
+            newLeft = Math.max(0, Math.min(window.innerWidth - 64, newLeft));
+            newTop = Math.max(0, Math.min(window.innerHeight - 64, newTop));
+            
+            assistant.style.left = newLeft + 'px';
+            assistant.style.top = newTop + 'px';
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                assistant.classList.remove('dragging');
+            }
+        });
+    }
+
+    sendMessage() {
+        const input = document.getElementById('chat-input');
+        const message = input.value.trim();
+        
+        if (!message) return;
+        
+        this.addMessage(message, 'user');
+        input.value = '';
+        
+        // 显示打字机效果
+        const typingIndicator = this.addTypingIndicator();
+        
+        // 模拟AI回复
+        setTimeout(() => {
+            this.removeTypingIndicator();
+            this.addMessage('这是一个模拟的AI回复。您可以在这里集成真实的AI接口。', 'ai');
+        }, 1500);
+    }
+
+    addMessage(text, sender) {
+        const messagesContainer = document.getElementById('chat-messages');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `chat-message ${sender}-message`;
+        
+        if (sender === 'ai') {
+            // AI消息（左侧）
+            messageDiv.innerHTML = `
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-tech-blue to-tech-purple p-0.5 flex-shrink-0">
+                        <img src="./images/头像.png" alt="AI助手" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <div class="bg-gray-700/50 rounded-lg p-3 text-white">
+                            <p class="text-sm">${text}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else {
+            // 用户消息（右侧）
+            messageDiv.innerHTML = `
+                <div class="flex items-start gap-3 justify-end">
+                    <div class="flex-1 max-w-xs">
+                        <div class="bg-gradient-to-r from-tech-blue to-tech-purple rounded-lg p-3 text-white">
+                            <p class="text-sm">${text}</p>
+                        </div>
+                    </div>
+                    <div class="w-8 h-8 rounded-full user-avatar flex-shrink-0">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+            `;
+        }
+        
+        messagesContainer.appendChild(messageDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // 添加打字机效果
+    addTypingIndicator() {
+        const messagesContainer = document.getElementById('chat-messages');
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'chat-message ai-message typing-indicator-container';
+        typingDiv.innerHTML = `
+            <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-tech-blue to-tech-purple p-0.5 flex-shrink-0">
+                    <img src="./images/头像.png" alt="AI助手" class="w-full h-full rounded-full object-cover">
+                </div>
+                <div class="flex-1">
+                    <div class="bg-gray-700/50 rounded-lg p-3">
+                        <div class="typing-indicator">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        messagesContainer.appendChild(typingDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        return typingDiv;
+    }
+
+    removeTypingIndicator() {
+        const typingIndicator = document.querySelector('.typing-indicator-container');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+}
+
+// Three.js几何体背景控制器
+class ThreeJSBackgroundController {
+    constructor() {
+        this.scene = null;
+        this.camera = null;
+        this.renderer = null;
+        this.geometries = [];
+        this.animationId = null;
+        this.isInitialized = false;
+        this.init();
+    }
+
+    init() {
+        if (this.isInitialized) return;
+        
+        // 创建场景
+        this.scene = new THREE.Scene();
+        
+        // 创建相机
+        this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.camera.position.z = 5;
+        
+        // 创建渲染器
+        this.renderer = new THREE.WebGLRenderer({ 
+            alpha: true, 
+            antialias: true 
+        });
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setClearColor(0x000000, 0);
+        
+        // 添加到页面
+        const container = document.getElementById('threejs-bg');
+        if (container) {
+            container.appendChild(this.renderer.domElement);
+        }
+        
+        // 创建几何体
+        this.createGeometries();
+        
+        // 开始动画
+        this.animate();
+        
+        // 监听窗口大小变化
+        window.addEventListener('resize', () => this.onWindowResize());
+        
+        this.isInitialized = true;
+    }
+
+    createGeometries() {
+        // 创建多种几何体
+        const geometries = [
+            { type: 'box', color: 0x00d4ff, position: [-3, 0, 0], rotation: [0.01, 0.01, 0.01] },
+            { type: 'sphere', color: 0x8b5cf6, position: [3, 0, 0], rotation: [0.01, 0.01, 0.01] },
+            { type: 'torus', color: 0x10b981, position: [0, -2, 0], rotation: [0.01, 0.01, 0.01] },
+            { type: 'octahedron', color: 0xf59e0b, position: [0, 2, 0], rotation: [0.01, 0.01, 0.01] },
+            { type: 'icosahedron', color: 0xec4899, position: [-2, -1, 0], rotation: [0.01, 0.01, 0.01] },
+            { type: 'tetrahedron', color: 0x06b6d4, position: [2, 1, 0], rotation: [0.01, 0.01, 0.01] }
+        ];
+
+        geometries.forEach((geo, index) => {
+            let geometry, material, mesh;
+            
+            switch (geo.type) {
+                case 'box':
+                    geometry = new THREE.BoxGeometry(1, 1, 1);
+                    break;
+                case 'sphere':
+                    geometry = new THREE.SphereGeometry(0.7, 32, 32);
+                    break;
+                case 'torus':
+                    geometry = new THREE.TorusGeometry(0.5, 0.2, 16, 100);
+                    break;
+                case 'octahedron':
+                    geometry = new THREE.OctahedronGeometry(0.6);
+                    break;
+                case 'icosahedron':
+                    geometry = new THREE.IcosahedronGeometry(0.5);
+                    break;
+                case 'tetrahedron':
+                    geometry = new THREE.TetrahedronGeometry(0.6);
+                    break;
+            }
+            
+            // 创建材质
+            material = new THREE.MeshPhongMaterial({
+                color: geo.color,
+                transparent: true,
+                opacity: 0.6,
+                wireframe: true,
+                wireframeLinewidth: 2
+            });
+            
+            // 创建网格
+            mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(...geo.position);
+            mesh.userData = {
+                originalRotation: [...geo.rotation],
+                rotationSpeed: {
+                    x: (Math.random() - 0.5) * 0.02,
+                    y: (Math.random() - 0.5) * 0.02,
+                    z: (Math.random() - 0.5) * 0.02
+                },
+                pulseSpeed: Math.random() * 0.02 + 0.01,
+                pulsePhase: Math.random() * Math.PI * 2
+            };
+            
+            this.geometries.push(mesh);
+            this.scene.add(mesh);
+        });
+        
+        // 添加环境光
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+        this.scene.add(ambientLight);
+        
+        // 添加点光源
+        const pointLight = new THREE.PointLight(0x00d4ff, 1, 100);
+        pointLight.position.set(0, 0, 5);
+        this.scene.add(pointLight);
+        
+        // 添加第二个点光源
+        const pointLight2 = new THREE.PointLight(0x8b5cf6, 1, 100);
+        pointLight2.position.set(5, 5, 5);
+        this.scene.add(pointLight2);
+    }
+
+    animate() {
+        this.animationId = requestAnimationFrame(() => this.animate());
+        
+        // 更新几何体动画
+        this.geometries.forEach((mesh, index) => {
+            // 旋转
+            mesh.rotation.x += mesh.userData.rotationSpeed.x;
+            mesh.rotation.y += mesh.userData.rotationSpeed.y;
+            mesh.rotation.z += mesh.userData.rotationSpeed.z;
+            
+            // 脉冲效果
+            mesh.userData.pulsePhase += mesh.userData.pulseSpeed;
+            const scale = 1 + Math.sin(mesh.userData.pulsePhase) * 0.1;
+            mesh.scale.set(scale, scale, scale);
+            
+            // 材质颜色渐变
+            const time = Date.now() * 0.001;
+            const hue = (time * 0.1 + index * 0.3) % 1;
+            mesh.material.color.setHSL(hue, 0.7, 0.5);
+        });
+        
+        // 相机轻微移动
+        const time = Date.now() * 0.0005;
+        this.camera.position.x = Math.sin(time) * 0.5;
+        this.camera.position.y = Math.cos(time * 0.7) * 0.3;
+        this.camera.lookAt(0, 0, 0);
+        
+        this.renderer.render(this.scene, this.camera);
+    }
+
+    onWindowResize() {
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    destroy() {
+        if (this.animationId) {
+            cancelAnimationFrame(this.animationId);
+        }
+        if (this.renderer) {
+            this.renderer.dispose();
+        }
+    }
+}
+
 // 主应用类
 class ResumeApp {
     constructor() {
@@ -674,11 +1228,15 @@ class ResumeApp {
         this.chartController = null;
         this.navigationController = null;
         this.timelineController = null;
+        this.modalController = null;
+        this.dreamBackgroundController = null;
+        this.qrCodeController = null;
+        this.aiChatController = null;
+        this.threeJSBackgroundController = null; // 新增Three.js背景控制器
         this.init();
     }
 
     async init() {
-        // 等待DOM加载完成
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => this.initializeApp());
         } else {
@@ -688,6 +1246,21 @@ class ResumeApp {
 
     initializeApp() {
         try {
+            // 初始化梦幻光影背景
+            this.dreamBackgroundController = new DreamBackgroundController();
+            
+            // 初始化二维码控制器
+            this.qrCodeController = new QRCodeController();
+            
+            // 初始化AI聊天控制器
+            this.aiChatController = new AIChatController();
+
+            // 初始化模态框控制器
+            this.modalController = new ModalController();
+
+            // 初始化Three.js背景控制器
+            this.threeJSBackgroundController = new ThreeJSBackgroundController();
+
             // 初始化AOS动画库
             if (typeof AOS !== 'undefined') {
                 AOS.init({
@@ -698,21 +1271,15 @@ class ResumeApp {
                 });
             }
 
-            // 初始化各个控制器
+            // 初始化其他控制器
             this.animationController = new AnimationController();
+            this.chartController = new ChartController();
             this.navigationController = new NavigationController();
             this.timelineController = new TimelineController();
 
-            // 延迟初始化图表，确保Chart.js加载完成
-            setTimeout(() => {
-                if (typeof Chart !== 'undefined') {
-                    this.chartController = new ChartController();
-                }
-            }, 500);
-
-            console.log('Resume app initialized successfully');
+            console.log('简历应用初始化完成');
         } catch (error) {
-            console.error('Error initializing resume app:', error);
+            console.error('应用初始化失败:', error);
         }
     }
 }
