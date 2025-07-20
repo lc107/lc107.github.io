@@ -878,28 +878,35 @@ class AIChatController {
     }
 
     getApiBaseUrl() {
-        // 根据当前域名自动选择API地址
-        const hostname = window.location.hostname;
-        const protocol = window.location.protocol;
-        
-        // 本地开发环境
-        if (hostname === 'localhost' || hostname === '127.0.0.1') {
-            return 'http://localhost:3001';
+        const isProduct = false
+        if(isProduct){
+            // 根据当前域名自动选择API地址
+            const hostname = window.location.hostname;
+            const protocol = window.location.protocol;
+
+            console.log(hostname)
+            console.log(protocol)
+            console.log( `${protocol}//${hostname}` )
+            
+            // 本地开发环境
+            if (hostname === 'localhost' || hostname === '127.0.0.1') {
+                return 'http://localhost:3001';
+            }
+            
+            // GitHub Pages环境
+            if (hostname.includes('github.io')) {
+                // 替换为您的阿里云服务器地址
+                return 'https://datalk.info:3001'; // 请替换为您的实际域名
+            }
+            
+            // 生产环境
+            if (hostname.includes('datalk.info')) {
+                return `${protocol}//${hostname}:3001`;
+            }
         }
-        
-        // GitHub Pages环境
-        if (hostname.includes('github.io')) {
-            // 替换为您的阿里云服务器地址
-            return 'https://your-domain.com'; // 请替换为您的实际域名
-        }
-        
-        // 生产环境
-        if (hostname.includes('your-domain.com')) {
-            return `${protocol}//${hostname}`;
-        }
-        
         // 默认本地开发
-        return 'http://localhost:3001';
+        // return 'http://localhost:3001';
+        return 'http://datalk.info:3001';
     }
 
     init() {
