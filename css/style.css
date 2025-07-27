@@ -1047,3 +1047,6 @@ main {
     background: rgba(31, 41, 55, 0.6) !important;
     backdrop-filter: blur(10px);
 }
+.menu-horizontal{
+    gap: 10px;
+}
